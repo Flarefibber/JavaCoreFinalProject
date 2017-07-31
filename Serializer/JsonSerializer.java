@@ -1,14 +1,11 @@
 package JSONSerializer.Serializer;
 
 
-import JSONSerializer.Mapper.*;
+import JsonSerializer.Mapper.*;
 import JSONSerializer.Writer.IJsonWriter;
 import JSONSerializer.Writer.JsonWriter;
 
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.Collection;
@@ -17,6 +14,7 @@ import java.util.Map;
 
 
 public class JsonSerializer {
+    private static volatile JsonSerializer instance = new JsonSerializer();
     public boolean indent;
     Map<Class, AbstractJsonMapper> mappersCache;
 
@@ -34,6 +32,9 @@ public class JsonSerializer {
         this.mappersCache.put(Object.class, new ObjectMapper());
     }
 
+    public static JsonSerializer getInstance() {
+        return instance;
+    }
     public boolean isIndent(){
         return indent;
     }
@@ -43,11 +44,10 @@ public class JsonSerializer {
     }
 
     public String serialize(Object obj) throws IllegalStateException {
-        Writer stringWriter = new StringWriter();
-        JsonWriter jsonWriter = new JsonWriter(stringWriter);
-        serialize(obj, stringWriter);
+        OutputStream stream = new ByteArrayOutputStream();
+        serialize(obj, stream);
 
-        return stringWriter.toString();
+        return stream.toString();
     }
 
     public void serialize(Object obj, OutputStream stream){
@@ -60,33 +60,41 @@ public class JsonSerializer {
     }
 
     public void serialize(Object obj, Writer writer){
-        JsonWriter jsonWriter = new JsonWriter(writer);
-
-        serialize(obj, jsonWriter);
+        JsonWriter jsonWriter;
+        if(isIndent()) {
+            jsonWriter = new IndentedJsonWriter(writer);
+        } else {
+            jsonWriter = new JsonWriter(writer);
+        }
     }
 
     protected void serialize(Object object, IJsonWriter writer){
-        AbstractJsonMapper mapper = getMapper(object.getClass());
-        mapper.write(object, writer);
+        if(object == null) {
+            writer.writeNull();
+        } else {
+           AbstractJsonMapper mapper = getMapper(object.getClass());
+            mapper.write(object, writer);
+        }
         writer.flush();
     }
 
     protected AbstractJsonMapper getMapper(Class clazz) {
-        if(clazz.equals(Boolean.class)) {
-            return mappersCache.get(Boolean.class);
-        }else if (clazz.equals(String.class)) {
-            return mappersCache.get(String.class);
-        } else if (clazz.equals(Collection.class)) {
-            return mappersCache.get(Collection.class);
-        } else if (clazz.equals(Number.class)) {
+        if (clazz.equals(Integer.class) || clazz.equals(Double.class) || clazz.equals(Float.class)
+                || clazz.equals(Short.class) || clazz.equals(Long.class) || clazz.equals(Byte.class)) {
             return mappersCache.get(Number.class);
-        } else if (clazz.equals(Object[].class)) {
-            return mappersCache.get(ObjectArrayMapper.class);
-        }  else if (clazz.equals(Map.class)) {
-            return mappersCache.get(Map.class);
-        } else if (clazz.equals(Number[].class) || clazz.equals(char[].class) || clazz.equals(boolean[].class)) {
+        } else if (mappersCache.containsKey(clazz)) {
+            return mappersCache.get(clazz);
+        } else if (clazz.isArray() && clazz.isPrimitive()) {
             return mappersCache.get(Array.class);
+        } else if (clazz.isArray()) {
+            return mappersCache.get(Object[].class);
+        } else if (Collection.class.isAssignableFrom(clazz)) {
+            return mappersCache.get(Collection.class);
+        } else if (Map.class.isAssignableFrom(clazz)) {
+            return mappersCache.get(Map.class);
         }
+
         return mappersCache.get(Object.class);
     }
 }
+
