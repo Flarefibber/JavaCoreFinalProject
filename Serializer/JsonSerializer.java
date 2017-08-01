@@ -1,7 +1,7 @@
 package JSONSerializer.Serializer;
 
 
-import JsonSerializer.Mapper.*;
+import JSONSerializer.Mapper.*;
 import JSONSerializer.Writer.IJsonWriter;
 import JSONSerializer.Writer.JsonWriter;
 
@@ -29,7 +29,7 @@ public class JsonSerializer {
         this.mappersCache.put(Object[].class, new ObjectArrayMapper(this));
         this.mappersCache.put(Map.class, new MapMapper(this));
         this.mappersCache.put(Array.class, new PrimitiveArrayMapper(this));
-        this.mappersCache.put(Object.class, new ObjectMapper());
+        this.mappersCache.put(Object.class, new CustomMapper(this));
     }
 
     public static JsonSerializer getInstance() {
