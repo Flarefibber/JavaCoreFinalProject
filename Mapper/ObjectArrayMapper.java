@@ -5,6 +5,14 @@ import JSONSerializer.Writer.IJsonWriter;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * The ObjectArrayMapper class inheritor of the AbstractJsonMapper class
+ *
+ * Overrides the write method
+ * write accepts Object[] obj and IJsonWriter writer
+ * Writes the Object[] obj to the writer, creates the JsonMapper children
+ */
+
 public class ObjectArrayMapper extends AbstractJsonMapper<Object[]>{
     public ObjectArrayMapper(JsonSerializer serializer) {
         this.serializer=serializer;

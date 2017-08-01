@@ -3,6 +3,15 @@ package JSONSerializer.Mapper;
 import JSONSerializer.Serializer.JsonSerializer;
 import JSONSerializer.Writer.IJsonWriter;
 
+/**
+ * The PrimitiveArrayMapper class inheritor of the AbstractJsonMapper class
+ *
+ * Overrides the write method
+ * write accepts Object obj and IJsonWriter writer
+ * Writes the Object obj to the writer, determines the type of the primitive array, and creates the JsonMapper children
+ * Works with all primitive data types
+ */
+
 public class PrimitiveArrayMapper extends AbstractJsonMapper<Object>{
     public PrimitiveArrayMapper(JsonSerializer serializer) {
         this.serializer=serializer;

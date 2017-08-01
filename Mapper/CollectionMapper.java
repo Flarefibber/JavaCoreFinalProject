@@ -6,6 +6,14 @@ import JSONSerializer.Writer.IJsonWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
+/**
+ * The CollectionMapper class inheritor of the AbstractJsonMapper class
+ *
+ * Overrides the write method
+ * write accepts Collection obj and IJsonWriter writer
+ * Writes the Collection obj to the writer, creates the JsonMapper children
+ */
+
 public class CollectionMapper extends AbstractJsonMapper<Collection>{
     public CollectionMapper(JsonSerializer serializer) {
         this.serializer=serializer;
