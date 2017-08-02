@@ -78,9 +78,8 @@ public class JsonSerializer {
         writer.flush();
     }
 
-    protected AbstractJsonMapper getMapper(Class clazz) {
-        if (clazz.equals(Integer.class) || clazz.equals(Double.class) || clazz.equals(Float.class)
-                || clazz.equals(Short.class) || clazz.equals(Long.class) || clazz.equals(Byte.class)) {
+protected AbstractJsonMapper getMapper(Class clazz) {
+        if (Number.class.isAssignableFrom(clazz)) {
             return mappersCache.get(Number.class);
         } else if (mappersCache.containsKey(clazz)) {
             return mappersCache.get(clazz);
