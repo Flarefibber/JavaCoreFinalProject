@@ -81,17 +81,17 @@ public class JsonSerializer {
 protected AbstractJsonMapper getMapper(Class clazz) {
         if (Number.class.isAssignableFrom(clazz)) {
             return mappersCache.get(Number.class);
+        } else if (Map.class.isAssignableFrom(clazz)) {
+            return mappersCache.get(Map.class);
         } else if (mappersCache.containsKey(clazz)) {
             return mappersCache.get(clazz);
-        } else if (clazz.isArray() && clazz.isPrimitive()) {
-            return mappersCache.get(Array.class);
         } else if (clazz.isArray()) {
             return mappersCache.get(Object[].class);
         } else if (Collection.class.isAssignableFrom(clazz)) {
             return mappersCache.get(Collection.class);
-        } else if (Map.class.isAssignableFrom(clazz)) {
-            return mappersCache.get(Map.class);
-        }
+        } else if (clazz.isArray() && clazz.isPrimitive()) {
+            return mappersCache.get(Array.class);
+        } 
 
         return mappersCache.get(Object.class);
     }
