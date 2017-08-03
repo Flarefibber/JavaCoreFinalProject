@@ -19,7 +19,7 @@ public class JsonWriter implements IJsonWriter{
         this.stringBuilder = new StringBuilder();
     }
 
-    private void deleteLastSeparator(){
+    protected void deleteLastSeparator(){
         if (stringBuilder.charAt(stringBuilder.length()-1) == ','){
             stringBuilder.deleteCharAt(stringBuilder.length()-1);
         }
