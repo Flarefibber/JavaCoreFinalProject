@@ -48,6 +48,7 @@ public class IndentedJsonWriter extends JsonWriter {
 
     @Override
     public void writeObjectEnd() {
+        deleteLastSeparator();
         currentLevel--;
         carriageReturn();
         super.writeObjectEnd();
@@ -62,24 +63,21 @@ public class IndentedJsonWriter extends JsonWriter {
     @Override
     public void writeArrayEnd() {
         super.writeArrayEnd();
-        carriageReturn();
+
     }
 
     @Override
     public void writeBoolean(boolean obj) {
-        carriageReturn();
         super.writeBoolean(obj);
     }
 
     @Override
     public void writeNull() {
-        carriageReturn();
         super.writeNull();
     }
 
     @Override
     public void writeNumber(Number number) {
-        carriageReturn();
         super.writeNumber(number);
     }
 
@@ -92,7 +90,6 @@ public class IndentedJsonWriter extends JsonWriter {
 
     @Override
     public void writeString(String string) {
-        carriageReturn();
         super.writeString(string);
     }
 }
