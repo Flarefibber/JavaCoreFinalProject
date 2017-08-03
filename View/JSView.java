@@ -1,7 +1,6 @@
 package JSONSerializer.View;
 
 import JSONSerializer.Controller.JSController;
-import JSONSerializer.Developer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,7 +67,7 @@ public class JSView {
         System.out.println("\n"+controller.serialize(t1)+"\n");
         System.out.println("\n"+controller.serialize(hm)+"\n");
         Developer developer = new Developer();
-        System.out.println("\n"+controller.serialize(developer)+"\n");
+        System.out.println(controller.serialize(developer));
     }
 
     private static int readInt(String request) {
