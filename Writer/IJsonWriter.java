@@ -15,4 +15,5 @@ public interface IJsonWriter{
     void writeBoolean(boolean obj);
     void writeNull();
     void flush();
+    void close();
 }

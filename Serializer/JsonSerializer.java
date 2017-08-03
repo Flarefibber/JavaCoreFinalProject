@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class JsonSerializer {
     private static volatile JsonSerializer instance = new JsonSerializer();
-    public boolean indent;
+    public boolean indent = false;
     Map<Class, AbstractJsonMapper> mappersCache;
 
     public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
@@ -81,7 +81,7 @@ public class JsonSerializer {
            AbstractJsonMapper mapper = getMapper(object.getClass());
             mapper.write(object, writer);
         }
-        writer.flush();
+        writer.close();
     }
 
 protected AbstractJsonMapper getMapper(Class clazz) {

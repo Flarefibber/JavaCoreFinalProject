@@ -99,6 +99,13 @@ public class JsonWriter implements IJsonWriter{
         }
 
     }
+    public void close(){
+        try {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }
