@@ -45,7 +45,7 @@ public class JsonSerializer {
     }
 
     public String serialize(Object obj) throws IllegalStateException {
-        StringWriter  stream = new StringWriter (100);
+        StringWriter  stream = new StringWriter ();
         serialize(obj, stream);
 
         return stream.toString();

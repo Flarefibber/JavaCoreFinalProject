@@ -10,13 +10,13 @@ public class JsonWriter implements IJsonWriter{
     protected Writer writer;
 
     public JsonWriter(){
-        this.stringBuilder = new StringBuilder(100);
-        this.writer = new StringWriter(100);
+        this.stringBuilder = new StringBuilder();
+        this.writer = new StringWriter();
     }
 
     public JsonWriter (Writer writer){
         this.writer = writer;
-        this.stringBuilder = new StringBuilder(100);
+        this.stringBuilder = new StringBuilder();
     }
 
     private void deleteLastSeparator(){
