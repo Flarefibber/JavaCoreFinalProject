@@ -1,7 +1,7 @@
 package JSONSerializer.Mapper;
 
-import JSONSerializer.JsonIgnore;
-import JSONSerializer.JsonProperty;
+import JSONSerializer.Annotation.JsonIgnore;
+import JSONSerializer.Annotation.JsonProperty;
 
 import JSONSerializer.Serializer.JsonSerializer;
 import JSONSerializer.Writer.IJsonWriter;

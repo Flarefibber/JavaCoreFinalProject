@@ -1,6 +1,7 @@
-package Tests;
+package JSONSerializer.Tests;
 
-import Writer.IndentedJsonWriter;
+import JSONSerializer.Serializer.JsonSerializer;
+import JSONSerializer.Writer.IndentedJsonWriter;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;

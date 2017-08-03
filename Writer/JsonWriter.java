@@ -6,7 +6,7 @@ package JSONSerializer.Writer;
 
 public class JsonWriter implements IJsonWriter{
 
-    JsonWriter(){
+    public JsonWriter(){
         StringBuilder stringBuilder = this.stringBuilder;
     }
     private StringBuilder stringBuilder = new StringBuilder();
