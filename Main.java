@@ -31,6 +31,7 @@ public class Main {
         System.out.println("\n"+jsonSerializer.serialize(ar2)+"\n");
         System.out.println("\n"+jsonSerializer.serialize(t1)+"\n");
         System.out.println("\n"+jsonSerializer.serialize(hm)+"\n");
-
+        Developer developer = new Developer();
+        System.out.println("\n"+jsonSerializer.serialize(developer)+"\n");
     }
 }

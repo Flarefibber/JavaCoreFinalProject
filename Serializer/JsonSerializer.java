@@ -71,8 +71,7 @@ public class JsonSerializer {
             jsonWriter.writeNull();
             return;
         }
-        AbstractJsonMapper mapper = getMapper(obj.getClass());
-        mapper.write(obj, jsonWriter);
+        serialize(obj,jsonWriter);
     }
 
     protected void serialize(Object object, IJsonWriter writer){
