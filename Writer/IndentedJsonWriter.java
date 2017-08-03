@@ -2,20 +2,18 @@ package JSONSerializer.Writer;
 
 import java.io.Writer;
 
-public class IndentedJsonWriter extends JsonWriter{
-    private int indentSize;
+public class IndentedJsonWriter extends JsonWriter {
+    private int indentSize = 4;
+
+
     private int currentLevel;
 
-    public IndentedJsonWriter(){
+    public IndentedJsonWriter() {
         super();
-        indentSize = 0;
-        currentLevel = 0;
     }
 
-    public IndentedJsonWriter(Writer writer){
+    public IndentedJsonWriter(Writer writer) {
         super(writer);
-        indentSize = 0;
-        currentLevel = 0;
     }
 
     public void setIndentSize(int indentSize) {
@@ -24,5 +22,33 @@ public class IndentedJsonWriter extends JsonWriter{
 
     public int getIndentSize() {
         return indentSize;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    @Override
+    public void writeObjectBegin() {
+        super.writeObjectBegin();
+        for (int i = 0; i < ++currentLevel; i++){
+            for (int j = 0; j < indentSize; j++){
+                stringBuilder.append(' ');
+            }
+        }
+    }
+
+    @Override
+    public void writeObjectEnd() {
+        for (int i = 0; i < --currentLevel; i++){
+            for (int j = 0; j < indentSize; j++){
+                stringBuilder.append(' ');
+            }
+        }
+        super.writeObjectEnd();
     }
 }
