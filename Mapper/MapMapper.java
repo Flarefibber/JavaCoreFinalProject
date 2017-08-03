@@ -32,7 +32,7 @@ public class MapMapper extends AbstractJsonMapper<Map> {
             for (int i = 0; i < keyArray.length; i++) {
                 writer.writeString(keyArray[i].toString());
                 writer.writePropertySeparator();
-                useReflectionSerializer (valueArray[i], writer);
+                useReflectionSerializer (valueArray[i], writer, serializer);
                 writer.writeSeparator();
             }
             writer.writeArrayEnd();

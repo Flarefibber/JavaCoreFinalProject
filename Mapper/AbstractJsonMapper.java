@@ -4,6 +4,7 @@ import JSONSerializer.Serializer.JsonSerializer;
 import JSONSerializer.Writer.IJsonWriter;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Abstract class AbstractJsonMapper
@@ -33,9 +34,12 @@ public abstract class AbstractJsonMapper<T>{
     protected void writeNull(IJsonWriter writer){
         writer.writeNull();
     }
-    void useReflectionSerializer (Object object, IJsonWriter writer){
+    protected void useReflectionSerializer (Object object, IJsonWriter writer, JsonSerializer serializer){
         try {
-            serializer.getClass().getDeclaredMethod("serialize",Object.class, IJsonWriter.class).invoke(serializer,object, writer);
+            Method method = serializer.getClass().getDeclaredMethod("serialize",Object.class, IJsonWriter.class);
+            method.setAccessible(true);
+            method.invoke(serializer,object, writer);
+            method.setAccessible(false);
         } catch (NoSuchMethodException e) {
             System.err.println("No such method");
         } catch (IllegalAccessException | InvocationTargetException e) {

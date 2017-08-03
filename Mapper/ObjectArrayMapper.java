@@ -25,7 +25,7 @@ public class ObjectArrayMapper extends AbstractJsonMapper<Object[]>{
             writer.writeArrayBegin();
             for(int i = 0; i < obj.length; i++){
                 Object object = obj[i];
-                useReflectionSerializer (object, writer);
+                useReflectionSerializer (object, writer, serializer);
                 writer.writeSeparator();
             }
             writer.writeArrayEnd();

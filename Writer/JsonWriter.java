@@ -1,16 +1,23 @@
 package JSONSerializer.Writer;
 
 
-
-
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 
 public class JsonWriter implements IJsonWriter{
+    protected StringBuilder stringBuilder;
+    protected Writer writer;
 
     public JsonWriter(){
-        StringBuilder stringBuilder = this.stringBuilder;
+        this.stringBuilder = new StringBuilder(100);
+        this.writer = new StringWriter(100);
     }
-    private StringBuilder stringBuilder = new StringBuilder();
 
+    public JsonWriter (Writer writer){
+        this.writer = writer;
+        this.stringBuilder = new StringBuilder(100);
+    }
 
     private void deleteLastSeparator(){
         if (stringBuilder.charAt(stringBuilder.length()-1) == ','){
@@ -26,6 +33,7 @@ public class JsonWriter implements IJsonWriter{
     public void writeObjectEnd() {
         deleteLastSeparator();
         stringBuilder.append('}');
+        flush();
     }
 
     @Override
@@ -37,11 +45,12 @@ public class JsonWriter implements IJsonWriter{
     public void writeArrayEnd() {
         deleteLastSeparator();
         stringBuilder.append(']');
+        flush();
     }
 
     @Override
     public void writeBoolean(boolean obj) {
-            stringBuilder.append(obj ? "true" : "false");
+            stringBuilder.append(obj);
     }
 
     @Override
@@ -52,7 +61,7 @@ public class JsonWriter implements IJsonWriter{
 
     @Override
     public void writeNumber(Number number) {
-            stringBuilder.append((int) number);
+            stringBuilder.append(number);
 
     }
 
@@ -72,12 +81,22 @@ public class JsonWriter implements IJsonWriter{
 
     @Override
     public void writeString(String string) {
-            stringBuilder.append("\"" + string + "\"");
+        if(string.length() <= 2 || (string.charAt(0) != '"' && string.charAt(string.length()-1) != '"')){
+            string = '"'+string+'"';
+        }
+            stringBuilder.append(string);
 
     }
 
     @Override
     public void flush(){
+        try {
+            writer.write(stringBuilder.toString());
+            writer.flush();
+            stringBuilder = new StringBuilder();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

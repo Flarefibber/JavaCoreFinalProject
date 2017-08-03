@@ -3,6 +3,7 @@ package JSONSerializer.Serializer;
 
 import JSONSerializer.Mapper.*;
 import JSONSerializer.Writer.IJsonWriter;
+import JSONSerializer.Writer.IndentedJsonWriter;
 import JSONSerializer.Writer.JsonWriter;
 
 import java.io.*;
@@ -44,7 +45,7 @@ public class JsonSerializer {
     }
 
     public String serialize(Object obj) throws IllegalStateException {
-        OutputStream stream = new ByteArrayOutputStream();
+        StringWriter  stream = new StringWriter (100);
         serialize(obj, stream);
 
         return stream.toString();
@@ -66,6 +67,12 @@ public class JsonSerializer {
         } else {
             jsonWriter = new JsonWriter(writer);
         }
+        if(obj == null){
+            jsonWriter.writeNull();
+            return;
+        }
+        AbstractJsonMapper mapper = getMapper(obj.getClass());
+        mapper.write(obj, jsonWriter);
     }
 
     protected void serialize(Object object, IJsonWriter writer){
@@ -83,6 +90,8 @@ protected AbstractJsonMapper getMapper(Class clazz) {
             return mappersCache.get(Number.class);
         } else if (Map.class.isAssignableFrom(clazz)) {
             return mappersCache.get(Map.class);
+        } else if(String.class.isAssignableFrom(clazz)){
+            return mappersCache.get(String.class);
         } else if (mappersCache.containsKey(clazz)) {
             return mappersCache.get(clazz);
         } else if (clazz.isArray()) {
@@ -91,7 +100,7 @@ protected AbstractJsonMapper getMapper(Class clazz) {
             return mappersCache.get(Collection.class);
         } else if (clazz.isArray() && clazz.isPrimitive()) {
             return mappersCache.get(Array.class);
-        } 
+        }
 
         return mappersCache.get(Object.class);
     }

@@ -50,7 +50,7 @@ public class CustomMapper extends AbstractJsonMapper<Object>{
                     Object fieldValue = field.get(obj);
                     writer.writeString(fieldName);
                     writer.writePropertySeparator();
-                    useReflectionSerializer (fieldValue, writer);
+                    useReflectionSerializer (fieldValue, writer, serializer);
                     writer.writeSeparator();
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();

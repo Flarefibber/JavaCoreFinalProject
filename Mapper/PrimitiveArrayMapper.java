@@ -25,39 +25,39 @@ public class PrimitiveArrayMapper extends AbstractJsonMapper<Object>{
 
             if(byte[].class.getCanonicalName().equals(obj.getClass().getCanonicalName())) {
                 for(int i = 0; i < ((byte[])obj).length; i++){
-                    useReflectionSerializer (((byte[])obj)[i], writer);
+                    useReflectionSerializer (((byte[])obj)[i], writer, serializer);
                 }
             } else if(short[].class.getCanonicalName().equals(obj.getClass().getCanonicalName())) {
                 for(int i = 0; i < ((short[])obj).length; i++){
-                    useReflectionSerializer (((short[])obj)[i], writer);
+                    useReflectionSerializer (((short[])obj)[i], writer, serializer);
                 }
             } else if(char[].class.getCanonicalName().equals(obj.getClass().getCanonicalName())) {
                 if(((char[])obj).length > 0){
                     for(Character object : (char[])obj){
-                        useReflectionSerializer (object, writer);
+                        useReflectionSerializer (object, writer, serializer);
                         writer.writeSeparator();
                     }
                 }
             } else if(int[].class.getCanonicalName().equals(obj.getClass().getCanonicalName())) {
                 for(int i = 0; i < ((int[])obj).length; i++){
-                    useReflectionSerializer (((int[])obj)[i], writer);
+                    useReflectionSerializer (((int[])obj)[i], writer, serializer);
                 }
             } else if(long[].class.getCanonicalName().equals(obj.getClass().getCanonicalName())) {
                 for(int i = 0; i < ((long[])obj).length; i++){
-                    useReflectionSerializer (((long[])obj)[i], writer);
+                    useReflectionSerializer (((long[])obj)[i], writer, serializer);
                 }
             } else if(float[].class.getCanonicalName().equals(obj.getClass().getCanonicalName())) {
                 for(int i = 0; i < ((float[])obj).length; i++){
-                    useReflectionSerializer (((float[])obj)[i], writer);
+                    useReflectionSerializer (((float[])obj)[i], writer, serializer);
                 }
             } else if(double[].class.getCanonicalName().equals(obj.getClass().getCanonicalName())) {
                 for(int i = 0; i < ((double[])obj).length; i++){
-                    useReflectionSerializer (((double[])obj)[i], writer);
+                    useReflectionSerializer (((double[])obj)[i], writer, serializer);
                 }
             } else if(boolean[].class.getCanonicalName().equals(obj.getClass().getCanonicalName())) {
                 if(((boolean[])obj).length > 0){
                     for(Object object : (boolean[])obj){
-                        useReflectionSerializer (object, writer);
+                        useReflectionSerializer (object, writer, serializer);
                         writer.writeSeparator();
                     }
                 }

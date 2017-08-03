@@ -25,7 +25,7 @@ public class CollectionMapper extends AbstractJsonMapper<Collection>{
         } else {
             writer.writeArrayBegin();
             for(Object object: obj){
-                useReflectionSerializer (object, writer);
+                useReflectionSerializer (object, writer, serializer);
                 writer.writeSeparator();
             }
             writer.writeArrayEnd();
