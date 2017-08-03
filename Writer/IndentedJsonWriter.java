@@ -32,23 +32,64 @@ public class IndentedJsonWriter extends JsonWriter {
         this.currentLevel = currentLevel;
     }
 
-    @Override
-    public void writeObjectBegin() {
-        super.writeObjectBegin();
-        for (int i = 0; i < ++currentLevel; i++){
-            for (int j = 0; j < indentSize; j++){
-                stringBuilder.append(' ');
-            }
+    private void carriageReturn(){
+        stringBuilder.append("\n");
+        for (int i = 0; i < getIndentSize()*getCurrentLevel(); i++){
+            stringBuilder.append(' ');
         }
     }
 
     @Override
+    public void writeObjectBegin() {
+        super.writeObjectBegin();
+        currentLevel++;
+        carriageReturn();
+    }
+
+    @Override
     public void writeObjectEnd() {
-        for (int i = 0; i < --currentLevel; i++){
-            for (int j = 0; j < indentSize; j++){
-                stringBuilder.append(' ');
-            }
-        }
+        deleteLastSeparator();
+        currentLevel--;
+        carriageReturn();
         super.writeObjectEnd();
+    }
+
+    @Override
+    public void writeArrayBegin() {
+        carriageReturn();
+        super.writeArrayBegin();
+    }
+
+    @Override
+    public void writeArrayEnd() {
+        super.writeArrayEnd();
+
+    }
+
+    @Override
+    public void writeBoolean(boolean obj) {
+        super.writeBoolean(obj);
+    }
+
+    @Override
+    public void writeNull() {
+        super.writeNull();
+    }
+
+    @Override
+    public void writeNumber(Number number) {
+        super.writeNumber(number);
+    }
+
+    @Override
+    public void writePropertySeparator() {
+        stringBuilder.append(' ');
+        super.writePropertySeparator();
+        stringBuilder.append(' ');
+    }
+
+    @Override
+    public void writeString(String string) {
+        super.writeString(string);
     }
 }
